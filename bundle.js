@@ -87,6 +87,7 @@
 	  var container = document.querySelector('#App');
 
 	  uibench.run(function (state) {
+	    console.log(state);
 	    _infernoDom2.default.render(tpl1431295514(_main.Main, state), container);
 	  }, function (samples) {
 	    _infernoDom2.default.render(tpl3976893219(JSON.stringify(samples, null, ' ')), container);
