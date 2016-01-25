@@ -14,7 +14,7 @@ class AnimBox extends Component {
       'background': 'rgba(0,0,0,' + (0.5 + ((time % 10) /10)).toString() + ')'
     };
 
-    // TODO: missing data-d={data.id}
+    // TODO: missing data-id={data.id}
     return (<div className="AnimBox" style={style}></div>);
   }
 }

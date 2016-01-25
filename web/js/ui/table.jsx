@@ -39,7 +39,7 @@ class TableRow extends Component {
       children.push((<TableCell key={i} text={cells[i]}></TableCell>));
     }
 
-    // missing data-d={data.id}
+    // TODO: missing data-id={data.id}
     return (<tr className={classes}>{children}</tr>);
   }
 }
