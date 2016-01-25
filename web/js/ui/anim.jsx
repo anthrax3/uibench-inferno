@@ -1,7 +1,7 @@
-import Inferno from 'inferno';
-import { Component } from 'inferno-component';
+// import Inferno from 'inferno';
+// import { Component } from 'inferno-component';
 
-class AnimBox extends Component {
+class AnimBox extends InfernoComponent.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return this.props.data !== nextProps.data;
   }
@@ -19,7 +19,7 @@ class AnimBox extends Component {
   }
 }
 
-export class Anim extends Component {
+export class Anim extends InfernoComponent.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return this.props.data !== nextProps.data;
   }

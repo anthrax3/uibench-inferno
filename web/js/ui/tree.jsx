@@ -1,17 +1,23 @@
-import Inferno from 'inferno';
-import { Component } from 'inferno-component';
+// import Inferno from 'inferno';
+// import { Component } from 'inferno-component';
 
-class TreeLeaf extends Component {
+const treeLeafTemplate = Inferno.createTemplate((text) => ({
+  tag: 'li',
+  attrs: { className: 'TreeLeaf' },
+  text: text
+}));
+
+class TreeLeaf extends InfernoComponent.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return this.props.data !== nextProps.data;
   }
 
   render() {
-    return (<li className="TreeLeaf">{this.props.data.id}</li>);
+    return treeLeafTemplate(this.props.data.id);
   }
 }
 
-class TreeNode extends Component {
+class TreeNode extends InfernoComponent.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return this.props.data !== nextProps.data;
   }
@@ -33,7 +39,7 @@ class TreeNode extends Component {
   }
 }
 
-export class Tree extends Component {
+export class Tree extends InfernoComponent.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return this.props.data !== nextProps.data;
   }

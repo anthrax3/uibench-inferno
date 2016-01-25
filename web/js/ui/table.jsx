@@ -1,7 +1,12 @@
-import Inferno from 'inferno';
-import { Component } from 'inferno-component';
-
-class TableCell extends Component {
+// import Inferno from 'inferno';
+// import { Component } from 'inferno-component';
+const tableCellTempalte = Inferno.createTemplate((onClick, text) => ({
+  tag: 'td',
+  attrs: { className: 'TableCell', onClick },
+  text
+}));
+    
+class TableCell extends InfernoComponent.Component {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
@@ -17,11 +22,11 @@ class TableCell extends Component {
   }
 
   render() {
-    return (<td className="TableCell" onClick={this.onClick}>{this.props.text}</td>);
+    return tableCellTempalte(this.onClick, this.props.text);
   }
 }
 
-class TableRow extends Component {
+class TableRow extends InfernoComponent.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return this.props.data !== nextProps.data;
   }
@@ -44,7 +49,7 @@ class TableRow extends Component {
   }
 }
 
-export class Table extends Component {
+export class Table extends InfernoComponent.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return this.props.data !== nextProps.data;
   }
