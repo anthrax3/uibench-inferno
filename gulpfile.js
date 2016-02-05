@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var webpack = require('webpack');
+var WebpackDevServer = require('webpack-dev-server');
 var ghPages = require('gulp-gh-pages');
 var path = require('path');
 
@@ -23,14 +24,14 @@ gulp.task('build', function(callback) {
       loaders: [{
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
-        loaders: ['babel?{ "presets": ["es2015", "stage-0"], "plugins": ["babel-plugin-syntax-jsx", "babel-plugin-inferno"] }']
+        loaders: ['babel?{ "presets": ["es2015-loose", "stage-0"], "plugins": ["babel-plugin-syntax-jsx", "babel-plugin-inferno"], "compact": false }']
       }]
     },
     plugins: [
       new webpack.NoErrorsPlugin(),
       new webpack.DefinePlugin({'process.env': {NODE_ENV: JSON.stringify('production')}}),
-      //new webpack.optimize.DedupePlugin(),
-      //new webpack.optimize.UglifyJsPlugin()
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin()
     ]
   };
 
@@ -38,6 +39,47 @@ gulp.task('build', function(callback) {
     if (err) throw new gutil.PluginError('build', err);
     gutil.log('[build]', stats.toString({colors: true}));
     callback();
+  });
+});
+
+gulp.task('serve', function(callback) {
+  var cfg = {
+    entry: [
+      'webpack-dev-server/client?http://0.0.0.0:8080',
+      './web/js/main.jsx'
+    ],
+    devtool: 'eval',
+    debug: true,
+    output: {
+      path: path.join(__dirname, 'build'),
+      filename: 'bundle.js'
+    },
+    resolve: {
+      extensions: ['', '.js', '.jsx']
+    },
+    module: {
+      loaders: [{
+        test: /\.jsx?$/,
+        exclude: /(node_modules)/,
+        loaders: ['babel?{ "presets": ["es2015-loose", "stage-0"], "plugins": ["babel-plugin-syntax-jsx", "babel-plugin-inferno"], "compact": false }']
+      }]
+    },
+    plugins: [
+      new webpack.NoErrorsPlugin(),
+      new webpack.DefinePlugin({'process.env': {NODE_ENV: JSON.stringify('production')}}),
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin()
+    ]
+  };
+
+  new WebpackDevServer(webpack(cfg), {
+    contentBase: './build',
+    stats: {
+      colors: true
+    }
+  }).listen(8080, '0.0.0.0', function (err) {
+    if (err) throw new gutil.PluginError('webpack-dev-server', err);
+    gutil.log('[serve]', 'http://localhost:8080/webpack-dev-server/index.html');
   });
 });
 
