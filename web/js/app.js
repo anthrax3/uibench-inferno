@@ -11,7 +11,7 @@
 		},
 		tag: 'div',
 		key: null,
-		attrs: { className : 'AnimBox' },
+		attrs: [{ name: 'className', value: 'AnimBox' }],
 		events: null,
 		children: null,
 		nextNode: null,
@@ -31,9 +31,9 @@
 			static: animBox1,
 			tag: null,
 			key: null,
-			attrs: {
-				style: style
-			},
+			attrs: [
+				{ name: 'style', value: style }
+			],
 			events: null,
 			children: null,
 			nextNode: null,
@@ -49,7 +49,7 @@
 		},
 		tag: 'div',
 		key: null,
-		attrs: { className : 'Anim' },
+		attrs: [{name: 'className', value: 'Anim'}],
 		events: null,
 		children: null,
 		nextNode: null,
@@ -84,10 +84,11 @@
 				tag: AnimBox,
 				key: item.id,
 				attrs: {
-					data: item,
-					onComponentShouldUpdate: appUpdateCheck
+					data: item
 				},
-				children: children,
+				events: {
+					componentShouldUpdate: appUpdateCheck
+				},
 				nextNode: null,
 				instance: null
 	      	});
@@ -121,7 +122,7 @@
 		},
 		tag: 'td',
 		key: null,
-		attrs: { className : 'TableCell' },
+		attrs: [ {name: 'className', value: 'TableCell'} ],
 		events: null,
 		children: null,
 		nextNode: null,
@@ -189,8 +190,10 @@
 			static: tableRow2,
 			tag: TableCell,
 			key: -1,
-			attrs: { text: '#' + data.id, onComponentShouldUpdate: updateTableCell },
-			events: null,
+			attrs: { text: '#' + data.id },
+			events: {
+				componentShouldUpdate: updateTableCell
+			},
 			children: null,
 			nextNode: null,
 			instance: null		    	
@@ -201,8 +204,10 @@
 			static: tableRow2,
 			tag: TableCell,
 			key: i,
-			attrs: { text: cells[i], onComponentShouldUpdate: updateTableCell },
-			events: null,
+			attrs: { text: cells[i] },
+			events: {
+				componentShouldUpdate: updateTableCell
+			},
 			children: null,
 			nextNode: null,
 			instance: null		    	
@@ -215,7 +220,7 @@
 			static: tableRow1,
 			tag: null,
 			key: null,
-			attrs: { className: classes },
+			attrs: [{ name: 'className', value: classes }],
 			events: null,
 			children: children,
 			nextNode: null,
@@ -231,7 +236,7 @@
 		},
 		tag: 'table',
 		key: null,
-		attrs: { className: 'Table' },
+		attrs: [{ name: 'className', value: 'Table' }],
 		events: null,
 		children: null,
 		nextNode: null,
@@ -281,10 +286,11 @@
 				key: null,
 				attrs: {
 					key: item.id,
-					data: item,
-					onComponentShouldUpdate: appUpdateCheck
+					data: item
 				},
-				events: null,
+				events: {
+					componentShouldUpdate: appUpdateCheck
+				},
 				children: null,
 				nextNode: null,
 				instance: null		    		
@@ -322,7 +328,7 @@
 		},
 		tag: 'li',
 		key: null,
-		attrs: { className: 'TreeLeaf' },
+		attrs: [{name: 'className', value: 'TreeLeaf' }],
 		events: null,
 		children: null,
 		nextNode: null,
@@ -351,7 +357,7 @@
 		},
 		tag: 'ul',
 		key: null,
-		attrs: { className: 'TreeNode' },
+		attrs: [{name: 'className', value: 'TreeNode' }],
 		events: null,
 		children: null,
 		nextNode: null,
@@ -401,10 +407,11 @@
 					tag: TreeNode,
 					key: n.id,
 					attrs: {
-						data: n,
-						onComponentShouldUpdate: appUpdateCheck
+						data: n
 					},
-					events: null,
+					events: {
+						componentShouldUpdate: appUpdateCheck
+					},
 					children: null,
 					nextNode: null,
 					instance: null
@@ -416,10 +423,11 @@
 					tag: TreeLeaf,
 					key: n.id,
 					attrs: {
-						data: n,
-						onComponentShouldUpdate: appUpdateCheck
+						data: n
 					},
-					events: null,
+					events: {
+						componentShouldUpdate: appUpdateCheck
+					},
 					children: null,
 					nextNode: null,
 					instance: null
@@ -448,7 +456,7 @@
 		},
 		tag: 'div',
 		key: null,
-		attrs: { className: 'Tree' },
+		attrs: [{name: 'className', value: 'Tree'}],
 		events: null,
 		children: null,
 		nextNode: null,
@@ -484,10 +492,11 @@
 				tag: TreeNode,
 				key: null,
 				attrs: {
-					data: props.data.root,
-					onComponentShouldUpdate: appUpdateCheck
+					data: props.data.root
 				},
-				events: null,
+				events: {
+					componentShouldUpdate: appUpdateCheck
+				},
 				children: null,
 				nextNode: null,
 				instance: null
@@ -505,7 +514,7 @@
 		},
 		tag: 'div',
 		key: null,
-		attrs: { className: 'Main' },
+		attrs: [{name: 'className', value: 'Main'}],
 		events: null,
 		children: null,
 		nextNode: null,
@@ -569,10 +578,11 @@
 			tag: Table,
 			key: null,
 			attrs: {
-				data: data.table,
-				onComponentShouldUpdate: appUpdateCheck
+				data: data.table
 			},
-			events: null,
+			events: {
+				componentShouldUpdate: appUpdateCheck
+			},
 			children: null,
 			nextNode: null,
 			instance: null
@@ -584,10 +594,11 @@
 			tag: Anim,
 			key: null,
 			attrs: {
-				data: data.anim,
-				onComponentShouldUpdate: appUpdateCheck
+				data: data.anim
 			},
-			events: null,
+			events: {
+				componentShouldUpdate: appUpdateCheck
+			},
 			children: null,
 			nextNode: null,
 			instance: null
@@ -599,10 +610,11 @@
 			tag: Tree,
 			key: null,
 			attrs: {
-				data: data.tree,
-				onComponentShouldUpdate: appUpdateCheck
+				data: data.tree
 			},
-			events: null,
+			events: {
+				componentShouldUpdate: appUpdateCheck
+			},
 			children: null,
 			nextNode: null,
 			instance: null
@@ -667,10 +679,11 @@
 				tag: Main,
 				key: null,
 				attrs: {
-					data: state,
-					onComponentShouldUpdate: appUpdateCheck
+					data: state
 				},
-				events: null,
+				events: {
+					componentShouldUpdate: appUpdateCheck
+				},
 				children: null,
 				nextNode: null,
 				instance: null
