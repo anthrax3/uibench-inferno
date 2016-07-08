@@ -12,7 +12,7 @@ gulp.task('html', function() {
 
 gulp.task('build', function(callback) {
   var cfg = {
-    entry: ['./web/js/main.jsx'],
+    entry: ['./web/js/app.js'],
     output: {
       path: path.join(__dirname, 'build'),
       filename: 'bundle.js'
@@ -46,7 +46,7 @@ gulp.task('serve', function(callback) {
   var cfg = {
     entry: [
       'webpack-dev-server/client?http://0.0.0.0:8080',
-      './web/js/main.jsx'
+      './web/js/app.js'
     ],
     devtool: 'eval',
     debug: true,

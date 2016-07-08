@@ -1,708 +1,301 @@
 (function() {
 	"use strict";
 
-	uibench.init('Inferno', '0.6.0');
+	uibench.init('Inferno', '0.7.16');
 
-	var animBox1 = {
-		dom: Inferno.staticCompiler.createElement('div', { className : 'AnimBox' }),
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
+	var defaultAppUpdateCheck = {
+		componentShouldUpdate: appUpdateCheck
+	};
+
+	var defaultUpdateTableCell = {
+		componentShouldUpdate: updateTableCell
+	};
+
+	var animBox1 = Inferno.createBlueprint({
 		tag: 'div',
-		key: null,
-		attrs: [{ name: 'className', value: 'AnimBox' }],
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};	
+		className: 'AnimBox',
+		attrs: { arg: 0 },
+		style: { arg: 1 }
+	});
 
 	var AnimBox = function (props) {
-		 var data = props.data;
-	    var time = data.time;
-	    var style = {
-	      'borderRadius': (time % 10).toString() + 'px',
-	      'background': 'rgba(0,0,0,' + (0.5 + ((time % 10) /10)).toString() + ')'
-	    };
+		var data = props.data;
+		var time = data.time;
+		var style =
+			'border-radius:' + (time % 10).toString() + 'px;' +
+			'background:rgba(0,0,0,' + (0.5 + ((time % 10) / 10)).toString() + ')';
 
-	    return {
-			dom: null,
-			static: animBox1,
-			tag: null,
-			key: null,
-			attrs: [
-				{ name: 'style', value: style }
-			],
-			events: null,
-			children: null,
-			nextNode: null,
-			instance: null			    	
-	    };
-	}
+		return animBox1({ 'data-id': data.id }, style)
+	};
 
-	var anim1 = {
-		dom: Inferno.staticCompiler.createElement('div', { className : 'Anim' }),
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
+	var anim1 = Inferno.createBlueprint({
 		tag: 'div',
-		key: null,
-		attrs: [{name: 'className', value: 'Anim'}],
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};		
+		className: 'Anim',
+		children: { arg: 0 }
+	}, 4);
 
-	var anim2 = {
-		dom: null,
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
-		tag: null,
-		key: null,
-		attrs: null,
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};		
+	var anim2 = Inferno.createBlueprint({
+		tag: { arg: 0 },
+		attrs: { arg: 1 },
+		hooks: { arg: 2 },
+		key: { arg: 3 }
+	});
 
 	var Anim = function (props) {
 		var data = props.data;
-	    var items = data.items;
+		var items = data.items;
 
-	    var children = [];
-	    for (var i = 0; i < items.length; i++) {
+		var children = [];
+		for (var i = 0; i < items.length; i++) {
 			var item = items[i];
-			children.push({
-				dom: null,
-				static: anim2,
-				tag: AnimBox,
-				key: item.id,
-				attrs: {
-					data: item
-				},
-				events: {
-					componentShouldUpdate: appUpdateCheck
-				},
-				nextNode: null,
-				instance: null
-	      	});
-	    }
-
-	    return {
-			dom: null,
-			static: anim1,
-			tag: null,
-			key: null,
-			attrs: null,
-			events: null,
-			children: children,
-			nextNode: null,
-			instance: null	
-	    };		
-	}	
-
-	function click(props) {
-		return function (e) {
-			console.log('Clicked' + props.text);
-			e.stopPropagation();	
+			children.push(anim2(AnimBox, { data: item }, defaultAppUpdateCheck, item.id));
 		}
-	}
+		return anim1(children);
+	};
 
-	var tableCell1 = {
-		dom: Inferno.staticCompiler.createElement('td', { className : 'TableCell' }),
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
+	var tableCell1 = Inferno.createBlueprint({
 		tag: 'td',
-		key: null,
-		attrs: [ {name: 'className', value: 'TableCell'} ],
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};	
+		className: 'TableCell',
+		children: { arg: 0 },
+		events: { arg: 1 },
+		attrs: { arg: 2 }
+	}, 1);
 
 	function updateTableCell(domNode, lastProps, nextProps) {
 		return lastProps.text !== nextProps.text;
 	}
 
+	function onClick(e) {
+		console.log('Clicked' + e.xtag);
+		e.stopPropagation();
+	}
+
 	var TableCell = function (props) {
-		return {
-			dom: null,
-			static: tableCell1,
-			tag: null,
-			key: null,
-			attrs: null,
-			events: { click: click(props) },
-			children: props.text,
-			nextNode: null,
-			instance: null	
-		};
+		return tableCell1(props.text, {
+			onclick: onClick
+		}, {
+			xtag: props.text
+		});
 	};
 
-	var tableRow1 = {
-		dom: Inferno.staticCompiler.createElement('tr'),
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
+	var tableRow1 = Inferno.createBlueprint({
 		tag: 'tr',
-		key: null,
-		attrs: null,
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};		
+		children: { arg: 0 },
+		className: { arg: 1 },
+		attrs: { arg: 2 }
+	}, 4);
 
-	var tableRow2 = {
-		dom: null,
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
-		tag: null,
-		key: null,
-		attrs: null,
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};		
+	var tableRow2 = Inferno.createBlueprint({
+		tag: { arg: 0 },
+		attrs: { arg: 1 },
+		hooks: { arg: 2 },
+		key: { arg: 3 }
+	});
 
 	var TableRow = function (props) {
 		var data = props.data;
-	    var classes = 'TableRow';
-	    if (data.active) {
-	      classes = 'TableRow active';
-	    }
-	    var cells = data.props;
+		var classes = 'TableRow';
+		if (data.active) {
+			classes = 'TableRow active';
+		}
+		var cells = data.props;
+		var children = [
+			tableRow2(TableCell, { text: '#' + data.id }, defaultUpdateTableCell, data.id)
+		];
 
-	    var children = [({
-			dom: null,
-			static: tableRow2,
-			tag: TableCell,
-			key: -1,
-			attrs: { text: '#' + data.id },
-			events: {
-				componentShouldUpdate: updateTableCell
-			},
-			children: null,
-			nextNode: null,
-			instance: null		    	
-	    })];
-	    for (var i = 0; i < cells.length; i++) {
-	      children.push({
-			dom: null,
-			static: tableRow2,
-			tag: TableCell,
-			key: i,
-			attrs: { text: cells[i] },
-			events: {
-				componentShouldUpdate: updateTableCell
-			},
-			children: null,
-			nextNode: null,
-			instance: null		    	
-		   });
-	    }
+		for (var i = 0; i < cells.length; i++) {
+			children.push(
+				tableRow2(TableCell, { text: cells[i] }, defaultUpdateTableCell, data.id)
+			);
+		}
 
-	    // // missing data-d={data.id}
-	    return {
-			dom: null,
-			static: tableRow1,
-			tag: null,
-			key: null,
-			attrs: [{ name: 'className', value: classes }],
-			events: null,
-			children: children,
-			nextNode: null,
-			instance: null
-	    };
-	}
-
-	var table1 = {
-		dom: Inferno.staticCompiler.createElement('table', { className: 'Table' }),
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
-		tag: 'table',
-		key: null,
-		attrs: [{ name: 'className', value: 'Table' }],
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};	
-
-	var table2 = {
-		dom: Inferno.staticCompiler.createElement('tbody'),
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
-		tag: 'tbody',
-		key: null,
-		attrs: null,
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
+		return tableRow1(children, classes, { 'data-id': data.id });
 	};
 
-	var table3 = {
-		dom: null,
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
-		tag: null,
-		key: null,
-		attrs: null,
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};	
+	var table1 = Inferno.createBlueprint({
+		tag: 'table',
+		className: 'Table',
+		children: { arg: 0 }
+	}, 2);
+
+	var table2 = Inferno.createBlueprint({
+		tag: 'tbody',
+		children: { arg: 0 }
+	}, 4);
+
+	var table3 = Inferno.createBlueprint({
+		tag: { arg: 0 },
+		attrs: { arg: 1 },
+		hooks: { arg: 2 },
+		key: { arg: 3 }
+	});
 
 	var Table = function (props) {
 		var items = props.data.items;
 
-	    var children = [];
-	    for (var i = 0; i < items.length; i++) {
-	      var item = items[i];
-	    	children.push({
-				dom: null,
-				static: table3,
-				tag: TableRow,
-				key: null,
-				attrs: {
-					key: item.id,
-					data: item
-				},
-				events: {
-					componentShouldUpdate: appUpdateCheck
-				},
-				children: null,
-				nextNode: null,
-				instance: null		    		
-    		});
-	    }
+		var children = [];
+		for (var i = 0; i < items.length; i++) {
+			var item = items[i];
+			children.push(
+				table3(TableRow, { data: item }, defaultAppUpdateCheck, item.id)
+			);
+		}
 
-	    return {
-	    	dom: null,
-			static: table1,
-			tag: null,
-			key: null,
-			attrs: null,
-			events: null,
-			children: {
-				dom: null,
-				static: table2,
-				tag: null,
-				key: null,
-				attrs: null,
-				events: null,
-				children: children,
-				nextNode: null,
-				instance: null
-			},
-			nextNode: null,
-			instance: null
-	    };		
-	}
+		return table1(table2(children));
+	};
 
-	var treeLeaf1 = {
-		dom: Inferno.staticCompiler.createElement('li', { className: 'TreeLeaf' }),
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
+	var treeLeaf1 = Inferno.createBlueprint({
 		tag: 'li',
-		key: null,
-		attrs: [{name: 'className', value: 'TreeLeaf' }],
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};		
+		className: 'TreeLeaf',
+		children: { arg: 0 }
+	}, 1);
 
 	var TreeLeaf = function (props) {
-		return {
-			dom: null,
-			static: treeLeaf1,
-			tag: null,
-			key: null,
-			attrs: null,
-			events: null,
-			children: props.data.id,
-			nextNode: null,
-			instance: null
-		};
+		return treeLeaf1(props.data.id);
 	};
 
-	var treeNode1 = {
-		dom: Inferno.staticCompiler.createElement('ul', { className: 'TreeNode' }),
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
+	var treeNode1 = Inferno.createBlueprint({
 		tag: 'ul',
-		key: null,
-		attrs: [{name: 'className', value: 'TreeNode' }],
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};		
+		className: 'TreeNode',
+		children: { arg: 0 }
+	}, 4);
 
-	var treeNode2 = {
-		dom: null,
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
-		tag: null,
-		key: null,
-		attrs: null,
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};	
+	var treeNode2 = Inferno.createBlueprint({
+		tag: { arg: 0 },
+		attrs: { arg: 1 },
+		hooks: { arg: 2 },
+		key: { arg: 3 }
+	});
 
-	var treeNode3 = {
-		dom: null,
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
-		tag: null,
-		key: null,
-		attrs: null,
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};
+	var treeNode3 = Inferno.createBlueprint({
+		tag: { arg: 0 },
+		attrs: { arg: 1 },
+		hooks: { arg: 2 },
+		key: { arg: 3 }
+	});
 
 	var TreeNode = function (props) {
 		var data = props.data;
-	    var children = [];
+		var children = [];
 
-	    for (var i = 0; i < data.children.length; i++) {
+		for (var i = 0; i < data.children.length; i++) {
 			var n = data.children[i];
 			if (n.container) {
-				children.push({
-					dom: null,
-					static: treeNode2,
-					tag: TreeNode,
-					key: n.id,
-					attrs: {
+				children.push(
+					treeNode2(TreeNode, {
 						data: n
-					},
-					events: {
-						componentShouldUpdate: appUpdateCheck
-					},
-					children: null,
-					nextNode: null,
-					instance: null
-				});
+					}, defaultAppUpdateCheck, n.id)
+				);
 			} else {
-				children.push({
-					dom: null,
-					static: treeNode3,
-					tag: TreeLeaf,
-					key: n.id,
-					attrs: {
+				children.push(
+					treeNode3(TreeLeaf, {
 						data: n
-					},
-					events: {
-						componentShouldUpdate: appUpdateCheck
-					},
-					children: null,
-					nextNode: null,
-					instance: null
-				});					
+					}, defaultAppUpdateCheck, n.id)
+				);
 			}
-	    }
+		}
 
-	    return {
-			dom: null,
-			static: treeNode1,
-			tag: null,
-			key: null,
-			attrs: null,
-			events: null,
-			children: children,
-			nextNode: null,
-			instance: null
-	    };		
-	}		
-
-	var tree1 = {
-		dom: Inferno.staticCompiler.createElement('div', { className: 'Tree' }),
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
-		tag: 'div',
-		key: null,
-		attrs: [{name: 'className', value: 'Tree'}],
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};		
-
-	var tree2 = {
-		dom: null,
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
-		tag: null,
-		key: null,
-		attrs: null,
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};	
-
-	var Tree = function (props) {
-		return {
-	      	dom: null,
-			static: tree1,
-			tag: null,
-			key: null,
-			attrs: null,
-			events: null,
-			children: {
-				dom: null,
-				static: tree2,
-				tag: TreeNode,
-				key: null,
-				attrs: {
-					data: props.data.root
-				},
-				events: {
-					componentShouldUpdate: appUpdateCheck
-				},
-				children: null,
-				nextNode: null,
-				instance: null
-			},
-			nextNode: null,
-			instance: null
-	    };		
-	}
-
-	var main1 = {
-		dom: Inferno.staticCompiler.createElement('div', { className: 'Main' }),
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
-		tag: 'div',
-		key: null,
-		attrs: [{name: 'className', value: 'Main'}],
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};	
-
-	var main2 = {
-		dom: null,
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
-		tag: null,
-		key: null,
-		attrs: null,
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};	
-
-	var main3 = {
-		dom: null,
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
-		tag: null,
-		key: null,
-		attrs: null,
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};	
-
-	var main4 = {
-		dom: null,
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
-		tag: null,
-		key: null,
-		attrs: null,
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};			
-
-	var Main = function (props) {
-    	var data = props.data;
-	    var location = data.location;
-
-	    var section;
-	    if (location === 'table') {
-	      section = {
-	      	dom: null,
-			static: main2,
-			tag: Table,
-			key: null,
-			attrs: {
-				data: data.table
-			},
-			events: {
-				componentShouldUpdate: appUpdateCheck
-			},
-			children: null,
-			nextNode: null,
-			instance: null
-	      };
-	    } else if (location === 'anim') {
-	      section = {
-	      	dom: null,
-			static: main3,
-			tag: Anim,
-			key: null,
-			attrs: {
-				data: data.anim
-			},
-			events: {
-				componentShouldUpdate: appUpdateCheck
-			},
-			children: null,
-			nextNode: null,
-			instance: null
-	      };	
-	    } else if (location === 'tree') {
-	      section = {
-	      	dom: null,
-			static: main4,
-			tag: Tree,
-			key: null,
-			attrs: {
-				data: data.tree
-			},
-			events: {
-				componentShouldUpdate: appUpdateCheck
-			},
-			children: null,
-			nextNode: null,
-			instance: null
-	      };		    	
-	    }
-
-	    return {
-	    	dom: null,
-			static: main1,
-			tag: null,
-			key: null,
-			attrs: null,
-			events: null,
-			children: section,
-			nextNode: null,
-			instance: null
-	    };		
-	}
-
-	var app1 = {
-		dom: null,
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
-		tag: null,
-		key: null,
-		attrs: null,
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
+		return treeNode1(children);
 	};
 
-	var app2 = {
-		dom: Inferno.staticCompiler.createElement('pre'),
-		static: {
-			keyed: [],
-			nonKeyed: []
-		},
+	var tree1 = Inferno.createBlueprint({
+		tag: 'div',
+		className: 'Tree',
+		children: { arg: 0 }
+	}, 2);
+
+	var tree2 = Inferno.createBlueprint({
+		tag: { arg: 0 },
+		attrs: { arg: 1 },
+		hooks: { arg: 2 }
+	});
+
+	var Tree = function (props) {
+		return tree1(
+			tree2(TreeNode, {
+				data: props.data.root
+			}, defaultAppUpdateCheck)
+		);
+	};
+
+	var main1 = Inferno.createBlueprint({
+		tag: 'div',
+		className: 'Main',
+		children: { arg: 0 }
+	}, 2);
+
+	var main2 = Inferno.createBlueprint({
+		tag: { arg: 0 },
+		attrs: { arg: 1 },
+		hooks: { arg: 2 }
+	});
+
+	var main3 = Inferno.createBlueprint({
+		tag: { arg: 0 },
+		attrs: { arg: 1 },
+		hooks: { arg: 2 }
+	});
+
+	var main4 = Inferno.createBlueprint({
+		tag: { arg: 0 },
+		attrs: { arg: 1 },
+		hooks: { arg: 2 }
+	});
+
+	var Main = function (props) {
+		var data = props.data;
+		var location = data.location;
+
+		var section;
+		if (location === 'table') {
+			section = main2(Table, {
+				data: data.table
+			}, defaultAppUpdateCheck);
+		} else if (location === 'anim') {
+			section = main3(Anim, {
+				data: data.anim
+			}, defaultAppUpdateCheck);
+		} else if (location === 'tree') {
+			section = main4(Tree, {
+				data: data.tree
+			}, defaultAppUpdateCheck);
+		}
+
+		return new main1(section);
+	};
+
+	var app1 = Inferno.createBlueprint({
+		tag: { arg: 0 },
+		attrs: { arg: 1 },
+		hooks: { arg: 2 }
+	});
+
+	var app2 = Inferno.createBlueprint({
 		tag: 'pre',
-		key: null,
-		attrs: null,
-		events: null,
-		children: null,
-		nextNode: null,
-		instance: null
-	};	
+		children: { arg: 0 }
+	}, 5);
 
 	function appUpdateCheck(domNode, lastProps, nextProps) {
 		return lastProps.data !== nextProps.data;
 	}
 
 	document.addEventListener('DOMContentLoaded', function(e) {
-	  var container = document.querySelector('#App');
+		var container = document.querySelector('#App');
 
-	  uibench.run(
-		function(state) {
-			Inferno.render({
-				dom: null,
-				static: app1,
-				tag: Main,
-				key: null,
-				attrs: {
-					data: state
-				},
-				events: {
-					componentShouldUpdate: appUpdateCheck
-				},
-				children: null,
-				nextNode: null,
-				instance: null
-			}, container)
-		},
-		function(samples) {
-			Inferno.render({
-				dom: null,
-				static: app2,
-				tag: null,
-				key: null,
-				attrs: null,
-				events: null,
-				children: JSON.stringify(samples, null, ' '),
-				nextNode: null,
-				instance: null					
-			}, container);
-		}
-	  );
+		uibench.run(
+			function(state) {
+				InfernoDOM.render(
+					app1(Main, {
+						data: state
+					}, defaultAppUpdateCheck)
+					, container);
+			},
+			function(samples) {
+				InfernoDOM.render(
+					app2(JSON.stringify(samples, null, ' '))
+					, container);
+			}
+		);
 	});
 
 })();
