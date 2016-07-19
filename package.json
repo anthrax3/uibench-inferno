@@ -15,10 +15,8 @@
     "uibench",
     "benchmark"
   ],
-  "dependencies": {
-    "inferno": "^0.5.21",
-    "inferno-component": "^0.5.21",
-    "inferno-dom": "^0.5.21"
+  "scripts": {
+    "build": "webpack"
   },
   "devDependencies": {
     "babel-core": "^6.4.0",
@@ -28,9 +26,6 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-es2015-loose": "^7.0.0",
     "babel-preset-stage-0": "^6.3.13",
-    "gulp": "^3.9.0",
-    "gulp-gh-pages": "^0.5.4",
-    "gulp-util": "^3.0.7",
     "webpack": "^1.12.11",
     "webpack-dev-server": "^1.14.1"
   }
