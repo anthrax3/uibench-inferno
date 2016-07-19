@@ -1,7 +1,7 @@
 (function() {
 	"use strict";
 
-	uibench.init('Inferno', '0.7.16');
+	uibench.init('Inferno', '0.7.22');
 
 	var defaultAppUpdateCheck = {
 		componentShouldUpdate: appUpdateCheck
