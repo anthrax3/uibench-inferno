@@ -7,7 +7,7 @@
 	var ValueTypes = Inferno.ValueTypes;
 	var NodeTypes = Inferno.NodeTypes;
 
-	uibench.init('Inferno', '1.0.0-beta3');
+	uibench.init('Inferno', '1.0.0-beta5');
 
 	var treeLeafBp = bp(e('li', { className: 'TreeLeaf' }), ValueTypes.CHILDREN, ChildrenTypes.TEXT, null, null, null, null, null, null);
 	var treeNodeBp = bp(e('ul', { className: 'TreeNode' }), ValueTypes.CHILDREN, ChildrenTypes.KEYED, null, null, null, null, null, null);
@@ -88,7 +88,7 @@
 			},
 			v1: null,
 			v2: null
-		};
+		};			
 	}
 
 	var animBoxBp = bp(e('div', { className: 'AnimBox' }), ValueTypes.PROP_STYLE, null, ValueTypes.PROP_DATA, 'id', null, null, null, null);
@@ -106,7 +106,7 @@
 			v0: style,
 			v1: data.id,
 			v2: null
-		};
+		};		
 	}
 
 	var animBp = bp(e('div', { className: 'Anim' }), ValueTypes.CHILDREN, ChildrenTypes.KEYED, null, null, null, null, null, null);
@@ -145,8 +145,8 @@
 		};
 	}
 
-	function onClick(e) {
-		console.log('Clicked ' + e.target.value);
+	function onClick(e, c, p) {
+		console.log('Clicked', p);
 		e.stopPropagation();
 	}
 
@@ -287,10 +287,10 @@
 
 		uibench.run(
 			function(state) {
-				InfernoDOM.render(main(state), container);
+				Inferno.render(main(state), container);
 			},
 			function(samples) {
-				InfernoDOM.render({
+				Inferno.render({
 					bp: preBp,
 					dom: null,
 					key: null,
