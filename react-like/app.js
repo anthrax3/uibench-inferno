@@ -163,7 +163,7 @@ class Main extends Component {
 	}
 }
 
-uibench.init('Inferno [simple]', '1.0.0-beta31');
+uibench.init('Inferno [simple]', '1.0.0-beta32');
 
 Inferno.disableRecycling();
 
