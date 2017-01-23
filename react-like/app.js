@@ -163,9 +163,8 @@ class Main extends Component {
 	}
 }
 
-uibench.init('Inferno [simple]', '1.0.0-beta32');
-
-Inferno.disableRecycling();
+Inferno.options.recyclingEnabled = false;
+uibench.init('Inferno [simple]', Inferno.version);
 
 document.addEventListener('DOMContentLoaded', function (e) {
 	var container = document.querySelector('#App');
