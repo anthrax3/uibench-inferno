@@ -4,6 +4,7 @@ import Inferno from 'inferno';
 var createVNode = Inferno.createVNode;
 var linkEvent = Inferno.linkEvent;
 
+Inferno.options.recyclingEnabled = true; // Advanced optimization
 uibench.init('Inferno', Inferno.version + ' *optimised*');
 
 var treeLeafProps = {className: 'TreeLeaf'};

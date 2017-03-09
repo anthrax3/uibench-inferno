@@ -4,7 +4,7 @@ const gutil = require('gulp-util');
 const webpack = require('webpack');
 
 // build directory: docs/${VERSION}
-const VERSION = '1.2';
+const VERSION = '1.3';
 
 const WebpackConfig = {
 	entry: [ './app.js' ],
