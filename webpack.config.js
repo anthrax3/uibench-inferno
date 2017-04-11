@@ -13,8 +13,8 @@ module.exports = {
             exclude: /node_modules/,
             loader: 'babel-loader',
             query: {
-                presets: [['es2015', { loose: true, modules: false }], 'stage-0'],
-                plugins: ['syntax-jsx', 'inferno']
+                presets: [['es2015', { loose: true, modules: false }]],
+                plugins: [['inferno', {imports: true}]]
             }
         }]
     },

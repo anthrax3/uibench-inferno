@@ -3,7 +3,7 @@ var webpack = require('webpack');
 module.exports = {
     entry: './app.js',
     output: {
-        path: './docs/1.3',
+        path: __dirname + '/docs/3.0',
         publicPath: 'docs',
         filename: 'bundle.js'
     },
@@ -14,11 +14,10 @@ module.exports = {
 				loader: 'babel-loader',
 				exclude: /node_modules/,
 				query: {
-					presets: [ [ 'es2015', {loose: true} ] ],
+					presets: [['es2015', { loose: true, modules: false }]],
 					plugins: [
 						'transform-class-properties',
 						'transform-object-rest-spread',
-						'babel-plugin-syntax-jsx',
 						[ 'babel-plugin-inferno', {imports: true} ]
 					]
 				}
