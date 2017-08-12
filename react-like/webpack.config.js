@@ -25,8 +25,8 @@ module.exports = {
 		]
     },
     plugins: [
-        new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }),
-        new webpack.optimize.UglifyJsPlugin()
+        // new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }),
+        // new webpack.optimize.UglifyJsPlugin()
     ],
     devServer: {
         port: process.env.PORT || 8000

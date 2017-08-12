@@ -1,4 +1,4 @@
-import Inferno from 'inferno';
+import {options, version, render} from 'inferno';
 import Component from 'inferno-component';
 
 class TableCell extends Component {
@@ -163,18 +163,18 @@ class Main extends Component {
 	}
 }
 
-Inferno.options.recyclingEnabled = false;
-uibench.init('Inferno [simple]', Inferno.version);
+options.recyclingEnabled = false;
+uibench.init('Inferno [simple]', version);
 
 document.addEventListener('DOMContentLoaded', function (e) {
 	var container = document.querySelector('#App');
 
 	uibench.run(
 		function (state) {
-			Inferno.render(<Main data={state} />, container);
+			render(<Main data={state} />, container);
 		},
 		function (samples) {
-			Inferno.render(<pre>{JSON.stringify(samples, null, ' ')}</pre>, container);
+			render(<pre>{JSON.stringify(samples, null, ' ')}</pre>, container);
 		}
 	);
 });
