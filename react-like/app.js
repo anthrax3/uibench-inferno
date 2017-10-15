@@ -34,15 +34,15 @@ class TableRow extends Component {
 
 		const cells = data.props;
 
-		const children = [];
+		const children = [<TableCell text={'#' + data.id}></TableCell>];
 		for (let i = 0; i < cells.length; i++) {
 			// Key is used because React prints warnings that there should be a key, libraries that can detect that children
 			// shape isn't changing should render cells without keys.
-			children.push(<TableCell key={i} text={cells[i]}></TableCell>);
+			children.push(<TableCell text={cells[i]}></TableCell>);
 		}
 
 		// First table cell is inserted this way to prevent react from printing warning that it doesn't have key property
-		return <tr className={classes} data-id={data.id}><TableCell text={'#' + data.id}></TableCell>{children}</tr>;
+		return <tr className={classes} data-id={data.id}>{children}</tr>;
 	}
 }
 

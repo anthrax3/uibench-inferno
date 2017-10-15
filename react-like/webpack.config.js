@@ -16,6 +16,7 @@ module.exports = {
 				query: {
 					presets: [['es2015', { loose: true, modules: false }]],
 					plugins: [
+                        'transform-es2015-modules-commonjs',
 						'transform-class-properties',
 						'transform-object-rest-spread',
 						[ 'babel-plugin-inferno', {imports: true} ]
@@ -25,8 +26,8 @@ module.exports = {
 		]
     },
     plugins: [
-        // new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }),
-        // new webpack.optimize.UglifyJsPlugin()
+        new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }),
+        new webpack.optimize.UglifyJsPlugin()
     ],
     devServer: {
         port: process.env.PORT || 8000
