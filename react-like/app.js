@@ -1,5 +1,4 @@
-import {options, version, render} from 'inferno';
-import Component from 'inferno-component';
+import {version, Component, render} from 'inferno';
 
 class TableCell extends Component {
 	constructor(props) {
@@ -34,11 +33,11 @@ class TableRow extends Component {
 
 		const cells = data.props;
 
-		const children = [<TableCell text={'#' + data.id}></TableCell>];
+		const children = [<TableCell key={-1} text={'#' + data.id}></TableCell>];
 		for (let i = 0; i < cells.length; i++) {
 			// Key is used because React prints warnings that there should be a key, libraries that can detect that children
 			// shape isn't changing should render cells without keys.
-			children.push(<TableCell text={cells[i]}></TableCell>);
+			children.push(<TableCell key={i} text={cells[i]}></TableCell>);
 		}
 
 		// First table cell is inserted this way to prevent react from printing warning that it doesn't have key property
@@ -163,7 +162,6 @@ class Main extends Component {
 	}
 }
 
-options.recyclingEnabled = false;
 uibench.init('Inferno [simple]', version);
 
 document.addEventListener('DOMContentLoaded', function (e) {

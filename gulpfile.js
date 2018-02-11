@@ -4,7 +4,7 @@ const gutil = require('gulp-util');
 const webpack = require('webpack');
 
 // build directory: docs/${VERSION}
-const VERSION = '3.0';
+const VERSION = '4.0';
 
 const WebpackConfig = {
 	entry: [ './app.js' ],
@@ -40,11 +40,6 @@ const WebpackConfig = {
 	],
 };
 
-function html() {
-	return gulp.src('index.html')
-		.pipe(gulp.dest(path.join('docs', VERSION)));
-}
-
 function build(done) {
 	webpack(WebpackConfig, function (err, stats) {
 		if (err) {
@@ -72,5 +67,5 @@ function serve() {
 	});
 }
 
-exports.build = gulp.parallel(build, html);
-exports.serve = gulp.series(html, serve);
+exports.build = gulp.parallel(build);
+exports.serve = gulp.series(serve);

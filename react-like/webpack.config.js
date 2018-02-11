@@ -3,7 +3,7 @@ var webpack = require('webpack');
 module.exports = {
     entry: './app.js',
     output: {
-        path: __dirname + '/docs/3.0',
+        path: __dirname + '/docs/4.0',
         publicPath: 'docs',
         filename: 'bundle.js'
     },
@@ -16,8 +16,6 @@ module.exports = {
 				query: {
 					presets: [['es2015', { loose: true, modules: false }]],
 					plugins: [
-                        'transform-es2015-modules-commonjs',
-						'transform-class-properties',
 						'transform-object-rest-spread',
 						[ 'babel-plugin-inferno', {imports: true} ]
 					]
